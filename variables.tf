@@ -20,7 +20,7 @@ variable "cluster_name" {
 }
 
 variable "cluster_security_group_id" {
-  description = "If provided, the EKS cluster will be attached to this security group. If not given, a security group will be created with necessary ingress/egress to work with the workers"
+  description = "If provided, the EKS cluster will be attached to this security group. If not given, a security group will be created with necessary ingres/egress to work with the workers"
   type        = string
   default     = ""
 }
@@ -45,6 +45,12 @@ variable "write_kubeconfig" {
 
 variable "manage_aws_auth" {
   description = "Whether to apply the aws-auth configmap file."
+  default     = true
+}
+
+variable "write_aws_auth_config" {
+  description = "Whether to write the aws-auth configmap file."
+  type        = bool
   default     = true
 }
 
@@ -109,7 +115,7 @@ variable "worker_groups_launch_template" {
 }
 
 variable "worker_security_group_id" {
-  description = "If provided, all workers will be attached to this security group. If not given, a security group will be created with necessary ingress/egress to work with the EKS cluster."
+  description = "If provided, all workers will be attached to this security group. If not given, a security group will be created with necessary ingres/egress to work with the EKS cluster."
   type        = string
   default     = ""
 }
@@ -286,16 +292,4 @@ variable "attach_worker_cni_policy" {
   description = "Whether to attach the Amazon managed `AmazonEKS_CNI_Policy` IAM policy to the default worker IAM role. WARNING: If set `false` the permissions must be assigned to the `aws-node` DaemonSet pods via another method or nodes will not be able to join the cluster."
   type        = bool
   default     = true
-}
-
-variable "create_eks" {
-  description = "Controls if EKS resources should be created (it affects almost all resources)"
-  type        = bool
-  default     = true
-}
-
-variable "node_groups" {
-  description = "A list of maps defining node group configurations to be defined using AWS EKS Managed Node Groups. See workers_group_defaults for valid keys."
-  type        = any
-  default     = []
 }
